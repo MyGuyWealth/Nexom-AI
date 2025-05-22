@@ -1,0 +1,1 @@
+document.getElementById("chat").innerHTML = "<p>Chat system loading...</p>";
