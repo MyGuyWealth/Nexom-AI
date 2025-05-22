@@ -1,15 +1,15 @@
 const socket = new WebSocket("ws://localhost:5000");
 
-socket.onopen = () => console.log("Connected!");
+socket.onopen = () => console.log("✅ WebSocket Connected!");
 
 socket.onmessage = (event) => {
     document.getElementById("chatBox").innerText += `\n${event.data}`;
 };
 
-document.getElementById("sendButton").addEventListener("click", () => {
-    const input = document.getElementById("messageInput");
-    if (input.value.trim() !== "") {
-        socket.send(input.value);
-        input.value = "";
-    }
-});
+socket.onclose = (event) => {
+    console.warn("❌ WebSocket Closed", event);
+    setTimeout(() => {
+        console.log("🔄 Reconnecting WebSocket...");
+        location.reload(); // Refresh page to retry connection
+    }, 2000);
+};

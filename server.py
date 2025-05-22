@@ -4,7 +4,6 @@ from flask_socketio import SocketIO
 app = Flask(__name__)
 socketio = SocketIO(app, cors_allowed_origins="*")
 
-# Serve a simple homepage
 @app.route("/")
 def home():
     return "Flask WebSocket Server is Running!"
@@ -13,6 +12,10 @@ def home():
 def handle_message(msg):
     print(f"Received: {msg}")  # Debugging output
     socketio.send(msg)
+
+@socketio.on("disconnect")
+def handle_disconnect():
+    print("Client disconnected.")
 
 if __name__ == "__main__":
     print("Starting Flask WebSocket Server...")
